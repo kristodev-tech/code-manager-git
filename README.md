@@ -1,4 +1,4 @@
-# Code/Version Organizer (PyQt Desktop App)
+# Code/Version Desktop Application for GitHub (PyQt Desktop App)
 
 A friendly desktop app to organize your code versions and releases — without leaving your repo.  
 It helps you:
@@ -129,6 +129,8 @@ python codemngr.py
 6. **Publish to GitHub**:
    - Click **Publish to GitHub**
    - Enter `owner/repo` and token
+   - *Reminder*Github wants your project folder(Repo name as a single name or with a dash between like this:
+     (codemanager or code-manager)
    - Choose options (commit release folder, push branch/tags)
    - Optionally **Store credentials** to the OS keychain (recommended)
    - The app will:
