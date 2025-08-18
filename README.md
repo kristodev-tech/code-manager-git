@@ -102,7 +102,7 @@ pip install -r requirements.txt
 ## ▶️ Run
 
 ```bash
-python codemngr.py
+python codemngr_git.py
 ```
 
 - The app starts in **dark mode**.
