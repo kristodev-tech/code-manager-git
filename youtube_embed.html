@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YouTube Embed</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+           margin: 0; padding: 2rem; display: grid; place-items: start center; gap: 1rem;
+           background: Canvas; color: CanvasText; }
+    .card { width: min(960px, 100%); border: 1px solid rgba(0,0,0,.12);
+            border-radius: 14px; padding: 1rem 1rem 1.25rem; box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+    h1 { font-size: 1.15rem; margin: 0 0 .5rem; opacity: .9; }
+    .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden; }
+    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .help { font-size: .95rem; opacity: .75; }
+    code { background: rgba(127,127,127,.15); padding: .1rem .35rem; border-radius: 6px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Embedded YouTube Video</h1>
+
+    <div id="help" class="help">
+      <p><strong>How to use this file:</strong></p>
+      <ol>
+        <li>Open this HTML with a query parameter, e.g. <code>youtube_embed.html?v=dQw4w9WgXcQ</code>, or</li>
+        <li>Edit the file and replace <code>VIDEO_ID_HERE</code> in the script with your video ID.</li>
+      </ol>
+      <p>You can also pass a full YouTube URL (watch, youtu.be, or shorts) via <code>?v=</code>; the ID will be extracted automatically.</p>
+    </div>
+
+    <div class="video">
+      <iframe id="ytframe"
+        src="about:blank"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <p id="fallback" class="help hidden">If the video doesn't load, open directly on YouTube:
+      <a id="ytlink" href="#" target="_blank" rel="noopener noreferrer">Open video</a>
+    </p>
+  </div>
+
+  <script>
+    (function() {
+      // 1) Default ID here (edit this if you want to bake one in):
+      var DEFAULT_VIDEO_ID = "VIDEO_ID_HERE";
+
+      function extractVideoId(input) {
+        if (!input) return null;
+        // If it's already a typical 11-char ID, return as-is
+        if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+
+        try {
+          var u = new URL(input);
+          if (u.hostname.includes("youtube.com")) {
+            // watch?v=, or shorts/<id>
+            var v = u.searchParams.get("v");
+            if (v) return v;
+            var shorts = u.pathname.match(/\/shorts\/([a-zA-Z0-9_-]{11})/);
+            if (shorts) return shorts[1];
+            var embed = u.pathname.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+            if (embed) return embed[1];
+          }
+          if (u.hostname === "youtu.be") {
+            var id = u.pathname.replace(/^\//, "");
+            if (/^[a-zA-Z0-9_-]{11}$/.test(id)) return id;
+          }
+        } catch (e) {
+          // Not a URL; fall through
+        }
+        return null;
+      }
+
+      var params = new URLSearchParams(location.search);
+      var vParam = params.get("v"); // can be ID or full URL
+      var videoId = extractVideoId(vParam) || extractVideoId(DEFAULT_VIDEO_ID);
+
+      var iframe = document.getElementById("ytframe");
+      var help = document.getElementById("help");
+      var fallback = document.getElementById("fallback");
+      var ytlink = document.getElementById("ytlink");
+
+      if (videoId) {
+        var src = "https://www.youtube-nocookie.com/embed/" + videoId + "?rel=0&modestbranding=1";
+        iframe.src = src;
+        ytlink.href ="https://www.youtube.com/watch?v=5B4pe5oOj7E" + videoId;
+        fallback.classList.remove("hidden");
+        help.classList.add("hidden");
+      } else {
+        // No ID available — keep instructions visible
+        ytlink.href = "https://www.youtube.com/";
+        fallback.classList.remove("hidden");
+      }
+    })();
+  </script>
+</body>
+</html>
