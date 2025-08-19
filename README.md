@@ -1,7 +1,7 @@
 # Code/Version Desktop Application for GitHub (PyQt Desktop App) This repo was created by code manager git.
 
 A friendly desktop app to organize your code versions and releases — without leaving your repo.  
-It helps you:
+It helps you: If you want the EXE already fully compiled and ready to launch, just reach out to me and i'll provide one for you.
 
 - Track versions/tags, notes, and release history
 - Generate release notes from commit messages
