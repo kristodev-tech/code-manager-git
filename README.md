@@ -15,6 +15,7 @@ It helps you: If you want the EXE already fully compiled and ready to launch, ju
 
 ---
 ## Your tube demo here: https://www.youtube.com/watch?v=5B4pe5oOj7E
+## Here is a direct download link for the App EXE and other files: https://drive.google.com/file/d/19Q0st1AmRLBJ1MGIhK7oAu-PtgLSl6G2/view?usp=drive_link
 
 ## ✨ Features
 
